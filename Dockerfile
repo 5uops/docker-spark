@@ -1,4 +1,4 @@
-FROM vungle/base
+FROM wenzizone/base
 
 # Install Java 8
 RUN DEBIAN_FRONTEND=noninteractive apt-add-repository ppa:webupd8team/java -y
