@@ -1,5 +1,10 @@
 FROM wenzizone/base
 
+RUN set -x; \
+    apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -q -y git-core curl sudo xmlstarlet software-properties-common python-software-properties \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Java 8
 RUN DEBIAN_FRONTEND=noninteractive apt-add-repository ppa:webupd8team/java -y
 RUN apt-get update
