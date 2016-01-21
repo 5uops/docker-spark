@@ -24,8 +24,12 @@ case ${SPARK_ROLE} in
         /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
         ;;
     "worker")
+        : ${POD_NAMESPACE='default'}
+        : ${SPARK_MASTER_SERVICE='spark-master'}
+        KUBE_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+        SPARK_MASTER_IP=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/v1/namespaces/${POD_NAMESPACE}/endpoints/${SPARK_MASTER_SERVICE}|jq .subsets[0].addresses[0].ip)
         # Run spark-class directly so that when it exits (or crashes), the pod restarts.
-        /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://${SPARK_MASTER_SERVICE_HOST}:7077 --webui-port 8081
+        /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://${SPARK_MASTER_IP}:7077 --webui-port 8081
         ;;
 esac
 
