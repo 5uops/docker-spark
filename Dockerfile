@@ -2,7 +2,7 @@ FROM wenzizone/base
 
 RUN set -x; \
     apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -q -y git-core curl sudo xmlstarlet software-properties-common python-software-properties \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -q -y git-core curl sudo xmlstarlet software-properties-common python-software-properties jq\
     && rm -rf /var/lib/apt/lists/*
 
 # Install Java 8
