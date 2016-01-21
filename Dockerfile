@@ -43,6 +43,6 @@ ENV PATH $PATH:/opt/spark/bin
 ADD start.sh /
 EXPOSE 7077 8080
 
-ENTRYPOINT ["/start.sh"]
+CMD ["/start.sh"]
 
 
